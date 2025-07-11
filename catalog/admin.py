@@ -7,11 +7,11 @@ from .models import Category, Product
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'description',)
-    list_filter = ('name', 'id')
+    list_filter = ('name', 'id',)
     search_fields = ('name', 'description',)
 # admin.site.register(Product)
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price')
-    list_filter = ('price', 'id')
-    search_fields = ('name', 'category',)
+    list_display = ('name', 'category', 'price', 'image',)
+    list_filter = ('price', 'id',)
+    search_fields = ('name', 'category__name',)
