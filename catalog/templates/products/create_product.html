@@ -11,17 +11,16 @@
             <form method="post" action="" class="form-floating">
                 {% csrf_token %}
                 <div class="mb-3 mt-3">
-                    <div class="mb-3">
-                        <textarea class="form-control" id="name" rows="1" placeholder="* Отображаемое наименование товара"></textarea>
-                    </div>
+                    <input class="form-control" type="text" id="name" name="name" required placeholder="* Отображаемое наименование товара">
                 </div>
                 <div class="mb-3 mt-3">
-                    <div class="mb-3">
-                        <textarea class="form-control" id="description" rows="3" placeholder="* Описание товара"></textarea>
-                    </div>
+                    <input class="form-control" type="number" step="any" min="0" id="price" name="price" required placeholder="* Цена товара">
                 </div>
                 <div class="mb-3 mt-3">
-                    <input class="form-control" list="datalistOptions" id="category_choice" placeholder="* Выберите категорию товара">
+                    <textarea class="form-control" type="text" id="description" name="description" rows="5" required placeholder="* Описание товара"></textarea>
+                </div>
+                <div class="mb-3 mt-3">
+                    <input class="form-control" list="datalistOptions" id="category_name" name="category_name" required placeholder="* Выберите категорию товара">
                         <datalist id="datalistOptions">
                             {% for category in categories %}
                                 <option value={{ category.name }}>
@@ -29,12 +28,7 @@
                         </datalist>
                 </div>
                 <div class="mb-3 mt-3">
-                    <div class="mb-3">
-                        <textarea class="form-control" id="price" rows="1" placeholder="* Цена товара"></textarea>
-                    </div>
-                </div>
-                <div class="mb-3 mt-3">
-                    <input class="form-control" type="file" id="image" placeholder="Выберите файл изображения">
+                    <input class="form-control" type="file" id="image" name="image" placeholder="Выберите файл изображения">
                 </div>
                 <p>* - Обязательные для заполнения поля.</p>
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>

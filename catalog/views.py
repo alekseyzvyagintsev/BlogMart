@@ -1,10 +1,13 @@
+import os.path
+
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
+from django.utils.encoding import filepath_to_uri
 
 from catalog.models import Product, Category
+from config import settings
 
 
 def home(request):
@@ -41,35 +44,54 @@ def create_product(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         description = request.POST.get('description')
-        category_name = request.POST.get('category_choice')
+        category_in = request.POST.get('category_name')
         price = request.POST.get('price')
-        image = request.FILES.get('image')
-        if not name or not description or not category_name or not price:
+        image = request.POST.get('image')
+        print(f'{name}, {category_in}, {price}, путь к изображению {image}, {description}')
+        if not name or not description or not category_in or not price:
             messages.error(request, 'Все обязательные поля должны быть заполнены!')
+            print('Все обязательные поля должны быть заполнены!')
             return render(request, 'products/create_product.html', context)
         else:
+            category_use = category_in
             try:
-                price_value = float(price)
+                # Получаем категорию 'Smartphones' из базы данных
+                category = Category.objects.get(name=category_in)
+            except Category.DoesNotExist as e:
+                raise Exception(str(e)) #"Категория {category_in} не найдена."
+                messages.error(request, str(e))
+                print(str(e))
+
+            if category:
+                category_use = category
+            try:
+                """
+                Не понимаю как добиться полного локального пути. 
+                Беру файл который уже имеется в конечной паке хранения.
+                """
                 if image:
                     product = Product.objects.create(
                         name=name,
                         description=description,
-                        category=category_name,
-                        price=price_value,
-                        image=image
+                        category=category_use,
+                        price=price,
+                        image=f'product_images/{image}'
                     )
                 else:
                     product = Product.objects.create(
                         name=name,
                         description=description,
-                        category=category_name,
-                        price=price_value,
-                        image='static/images/base_image.jpg'
+                        category=category_use,
+                        price=price,
+                        image='product_images/base_image.jpg'
                     )
                 messages.success(request, f'Вы успешно создали новый товар: {product.name}')
+                print(f'Вы успешно создали новый товар: {product.name}')
                 return redirect('catalog:home')
-            except ValueError:
-                messages.error(request, 'Цена указана неверно.')
+            except ValueError as e:
+                messages.error(request, str(e))
+                print(str(e))
             except Exception as e:
                 messages.error(request, str(e))
+                print(str(e))
     return render(request, 'products/create_product.html', context)
