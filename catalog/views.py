@@ -1,14 +1,9 @@
-import os.path
-
 from django.contrib import messages
 from django.core.files.storage.filesystem import FileSystemStorage
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.utils.encoding import filepath_to_uri
 
 from catalog.models import Product, Category
-from config import settings
 
 
 def home(request):
