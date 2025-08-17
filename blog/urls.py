@@ -1,3 +1,4 @@
+######################################################################################
 from django.urls import path
 
 from .apps import BlogConfig
@@ -20,3 +21,5 @@ urlpatterns = [
     path("article/detail/<int:pk>/", BlogArticleDetailView.as_view(), name="article_detail"),
     path("article/update/<int:pk>/", BlogArticleUpdateView.as_view(), name="article_update"),
 ]
+
+######################################################################################

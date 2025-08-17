@@ -1,6 +1,7 @@
+######################################################################################
 from django.urls import path
 
-from catalog.apps import CatalogConfig
+from .apps import CatalogConfig
 
 from .views import (
     CategoryCreateView,
@@ -34,3 +35,4 @@ urlpatterns = [
     path("product/detail/<int:pk>/", ProductDetailView.as_view(), name="product_detail"),
     path("product/update/<int:pk>/", ProductUpdateView.as_view(), name="product_update"),
 ]
+######################################################################################

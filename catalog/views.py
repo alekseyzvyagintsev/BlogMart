@@ -1,4 +1,5 @@
 #################################################################################################
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files.storage.filesystem import FileSystemStorage
 from django.shortcuts import render
@@ -61,21 +62,21 @@ class ContactView(View):
         return render(request, "products/contact.html")
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     form_class = CategoryForm
     template_name = "products/category_form.html"
     success_url = reverse_lazy("catalog:categories")
 
 
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
     form_class = CategoryForm
     template_name = "products/category_form.html"
     success_url = reverse_lazy("catalog:categories")
 
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = "products/category_detail.html"
     context_object_name = "category"
@@ -94,13 +95,13 @@ class CategoryDetailView(DetailView):
         return context
 
 
-class CategoryDeleteView(DeleteView):
+class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     model = Category
     template_name = "products/category_confirm_delete.html"
     success_url = reverse_lazy("catalog:categories")
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     paginate_by = 12
     template_name = "products/categories.html"
@@ -111,7 +112,7 @@ class CategoryListView(ListView):
         return queryset.order_by("-updated_at")
 
 
-class ProductCreateView(ImageHandlingMixin, SuccessMessageMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, ImageHandlingMixin, SuccessMessageMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = "products/product_form.html"
@@ -125,7 +126,7 @@ class ProductCreateView(ImageHandlingMixin, SuccessMessageMixin, CreateView):
         return context
 
 
-class ProductUpdateView(ImageHandlingMixin, SuccessMessageMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, ImageHandlingMixin, SuccessMessageMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "products/product_form.html"
@@ -139,13 +140,13 @@ class ProductUpdateView(ImageHandlingMixin, SuccessMessageMixin, UpdateView):
         return context
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "products/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:products")
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     paginate_by = 12
     template_name = "products/products.html"
@@ -156,7 +157,7 @@ class ProductListView(ListView):
         return queryset.order_by("-updated_at")
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "products/product_detail.html"
     context_object_name = "product"

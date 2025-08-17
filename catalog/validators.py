@@ -1,3 +1,4 @@
+######################################################################################
 import os
 
 from django.core.exceptions import ValidationError
@@ -34,3 +35,6 @@ def validate_extensions(valid_extensions, value):
         extension = os.path.splitext(value.name)[1].lstrip(".").lower()
         if extension not in valid_extensions:
             raise ValidationError(f"{extension}! Допускаются только файлы {valid_extensions}")
+
+
+######################################################################################

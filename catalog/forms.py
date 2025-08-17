@@ -1,3 +1,4 @@
+#########################################################################################################
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db.models.fields import BooleanField
@@ -74,3 +75,5 @@ class ProductForm(StileFormMixin, forms.ModelForm):
         validate_max_size_mb(max_size_mb, image_field)
 
         return image_field
+
+#########################################################################################################

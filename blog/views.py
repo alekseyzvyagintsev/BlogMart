@@ -1,18 +1,13 @@
-from django import forms
-from django.contrib.messages.views import SuccessMessageMixin
+######################################################################################
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.storage.filesystem import FileSystemStorage
 from django.shortcuts import redirect, render
 from django.urls.base import reverse_lazy
 from django.views.generic import DetailView, ListView, View
 from django.views.generic.edit import CreateView, DeleteView, FormMixin, UpdateView
 
+from blog.forms import ArticleForm
 from blog.models import BlogEntry
-
-
-class ArticleForm(forms.ModelForm):
-    class Meta:
-        model = BlogEntry
-        fields = ["title", "entry", "image", "is_active"]
 
 
 class ImageHandlingMixin(FormMixin):
@@ -56,7 +51,7 @@ class ActiveArticlesListView(ListView):
         return queryset.order_by("-created_at")
 
 
-class ArchiveArticlesListView(ListView):
+class ArchiveArticlesListView(LoginRequiredMixin, ListView):
     model = BlogEntry
     paginate_by = 12
     template_name = "blog/index.html"
@@ -69,7 +64,7 @@ class ArchiveArticlesListView(ListView):
         return queryset.order_by("-created_at")
 
 
-class BlogArticleCreateView(ImageHandlingMixin, CreateView):
+class BlogArticleCreateView(LoginRequiredMixin, ImageHandlingMixin, CreateView):
     model = BlogEntry
     form_class = ArticleForm
     template_name = "blog/blog_form.html"
@@ -79,7 +74,7 @@ class BlogArticleCreateView(ImageHandlingMixin, CreateView):
         return reverse_lazy("blog:article_detail", kwargs={"pk": self.object.pk})
 
 
-class BlogArticleUpdateView(ImageHandlingMixin, UpdateView):
+class BlogArticleUpdateView(LoginRequiredMixin, ImageHandlingMixin, UpdateView):
     model = BlogEntry
     form_class = ArticleForm
     template_name = "blog/blog_form.html"
@@ -117,7 +112,10 @@ class BlogArticleDetailView(DetailView):
         return obj
 
 
-class BlogArticleDeleteView(DeleteView):
+class BlogArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = BlogEntry
     template_name = "blog/article_delete.html"
     success_url = reverse_lazy("blog:active_articles")
+
+
+######################################################################################
