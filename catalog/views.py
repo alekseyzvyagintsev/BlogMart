@@ -7,6 +7,8 @@ from django.core.files.storage.filesystem import FileSystemStorage
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView, View
 from django.views.generic.edit import CreateView, DeleteView, FormMixin, UpdateView
 
@@ -222,6 +224,7 @@ class ProductListView(LoginRequiredMixin, ListView):
         return queryset.order_by('-updated_at')
 
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "products/product_detail.html"
