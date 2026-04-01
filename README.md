@@ -154,5 +154,13 @@ python manage.py runserver
 http://127.0.0.1:8000/
 ```
 
+## Автор и поддержка
+
+**Разработчик**: Alexey Zvyagintsev
+**Email**: alex0236889@gmail.com
+**GitHub**: https://github.com/alekseyzvyagintsev/middle_web_app
+
+Для вопросов, предложений или сообщений об ошибках, пожалуйста, свяжитесь с разработчиком по-указанному email, все предложения по улучшению приветствуются.
+
 ## Лицензия
 Этот проект лицензирован по [лицензии MIT](LICENSE)
