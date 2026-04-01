@@ -116,18 +116,31 @@ python manage.py createsuperuser
 
 ### Заполнение базы данных тестовыми данными (опционально)
 ```
-python manage.py cau (создание групп и пользователей admin, moderator, user)
-python manage.py fill_blog (заполнение блога)
-python manage.py add_products (добавление товаров)
+(создание групп и пользователей admin, moderator, user. У всех пользователей password = zxcm3490)
+python manage.py cau
+
+(заполнение каталога)
+python manage.py fill_blog
+
+(добавление товаров)
+python manage.py add_products
+
 или смотри Загрузка фикстур
 ```
 
 ### Загрузка фикстур (опционально)
 ```
-python manage.py loaddata group_fixture.json (загрузка групп)
-python manage.py loaddata users_fixture.json (загрузка пользователей)
-python manage.py loaddata catalog_fixture.json (загрузка категорий и товаров)
-python manage.py loaddata blog_fixture.json (загрузка статей)
+(загрузка групп)
+python manage.py loaddata fixture_group.json
+
+(загрузка пользователей)
+python manage.py loaddata fixture_users.json
+
+(загрузка категорий и товаров)
+python manage.py loaddata fixture_catalog.json
+
+(загрузка статей)
+python manage.py loaddata fixture_blog.json
 ```
 
 ### Запуск сервера
